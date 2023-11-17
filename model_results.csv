@@ -1,0 +1,5 @@
+"Model","Accuracy","AUC","Fraudulent_Transactions"
+"Logistic Regression",0.9994,0.859,66
+"Decision Tree",0.9995,0.908,75
+"Random Forest",0.9996,0.908,75
+"XGBoost",0.9997,0.918,77
