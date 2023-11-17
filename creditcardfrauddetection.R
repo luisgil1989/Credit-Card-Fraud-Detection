@@ -241,6 +241,7 @@ all_results <- rbind(logistic_results, tree_results, rf_results, xgb_results)
 write.csv(all_results, file = "model_results.csv", row.names = FALSE)
 
 ######################## EXPORT THE REULTS TO A PLOT ########################
+
 # Install and load the ggplot2 package
 if (!requireNamespace("ggplot2", quietly = TRUE)) {
   install.packages("ggplot2")
@@ -263,24 +264,22 @@ dot_colors <- c("Logistic Regression" = "skyblue",
                 "XGBoost" = "blue")
 
 # Dot plot with connecting lines for accuracy
-ggplot(df, aes(x = Model, y = Accuracy, group = 1, color = Model)) +
+plot <- ggplot(df, aes(x = Model, y = Accuracy, group = 1, color = Model)) +
   geom_point(position = position_dodge(width = 0.5), size = 3) +
   geom_line(position = position_dodge(width = 0.5), alpha = 0.5) +
   labs(title = "Model Accuracy Comparison",
        x = "Model",
        y = "Accuracy") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid.major = element_line(color = "gray", linetype = "dashed"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "white"),
+    plot.background = element_rect(fill = "white")
+  ) +
   ylim(0.9994, 1.0) +  # Adjust ylim based on your data range
   scale_color_manual(values = dot_colors)  # Set dot colors
 
 # Save the plot as a PNG file
-ggsave("R_Plot_accuracy_comparison.png", device = "png", width = 10, height = 6)
-
-
-
-
-
-
-     
-
+ggsave("accuracy_comparison.png", plot, width = 10, height = 6, units = "in", dpi = 300)
